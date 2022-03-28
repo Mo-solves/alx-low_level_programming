@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  *_memset - fills memory with constant byte
  *
@@ -9,6 +10,7 @@
  *Return:pointer to memory area s
  *
  */
+
 char *_memset(char *s, char b, unsigned int n)
 {
 unsigned int i;
