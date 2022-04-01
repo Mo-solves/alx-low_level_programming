@@ -1,7 +1,7 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * _isupper - check the code for Holberton School students.
+ * _isupper - check the code.
  *
  * @c: is an integer param
  *
@@ -12,5 +12,5 @@
 int _isupper(int c)
 {
 
-	return (c >= 65 && c <= 90);
+return (c >= 65 && c <= 90);
 }

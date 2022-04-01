@@ -1,7 +1,7 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * _isdigit - check the code for Holberton School students.
+ * _isdigit - check the code.
  *
  * @c: is an integer param
  *
@@ -12,5 +12,5 @@
 int _isdigit(int c)
 {
 
-	return (c >= 48 && c <= 57);
+return (c >= 48 && c <= 57);
 }

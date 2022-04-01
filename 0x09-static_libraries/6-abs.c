@@ -1,8 +1,7 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * _abs - check the code for Holberton School students.
- *
+ * _abs - check the code.
  * @n: is an integer argument
  *
  * Return: Always 0.
@@ -10,9 +9,9 @@
 
 int _abs(int n)
 {
-	if (n >= 0)
-	{
-		return (n);
-	}
-	return (-n);
+if (n >= 0)
+{
+return (n);
+}
+return (-n);
 }
