@@ -35,6 +35,11 @@ if (!f)
 {
 return (NULL);
 } 
+if (!str || !*str)
+{
+return (NULL);
+}
+return *s;
 }
 
 char **strtow(char *str)
@@ -42,11 +47,8 @@ char **strtow(char *str)
 int i = 0, j = 0, k = 0;
 int len = 0, count = 0;
 char **f, *col;
-strlen(*str);
-if (!str || !*str)
-{
-return (NULL);
-}
+
+
 while (*(str + i))
 {
 if (*(str + i) != ' ')
