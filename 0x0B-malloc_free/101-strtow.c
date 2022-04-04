@@ -1,97 +1,84 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include "main.h"
-/**
- *word_len - finds the length of a word
- *@str:string to test
- *
- *Return:int
- */
-int word_len(char *str)
-{
-int i = 0, len = 0;
 
-while (*(str + i) && *(str + i) != ' ')
-{
-len++;
-i++;
-}
-return (len);
-}
 /**
- *word_count - counts the number of words
- *
- *@str:input
- *
- *Return:(no. of words)
- *
+ * strtow - char
+ * @str: pointer to string params
+ * Return: char
  */
-int word_count(char *str)
-{
-int i = 0, len = 0, count = 0;
 
-for (i = 0; *(str + i); i++)
+char **strtow(char *str)
 {
-len++;
+int i = 0, j = 0, k = 0;
+int len = 0, count = 0;
+char **f, *col;
+
+if (!str || !*str)
+{
+return (NULL);
 }
-for (i = 0; i < len; i++)
+
+while (*(str + i))
 {
 if (*(str + i) != ' ')
 {
-count++;
-i += word_len(str + i);
-}
-}
-return (count);
-}
-/**
- *strtow - splits a string into words
- *
- *@str:input
- *
- *Return:0 - success
- *
- */
-char **strtow(char *str)
+if (*(str + i + 1) == ' ' || *(str + i + 1) == 0)
 {
-int i, words, w, letters, l;
-char **p;
+count += 1;
+}
+}
+i++;
+}
 
-if (str == NULL || str[0] == '\0')
+if (count == 0)
 {
 return (NULL);
 }
-words = word_count(str);
-if (words == 0)
+count += 1;
+f = malloc(sizeof(char *) * count);
+
+if (!f)
 {
 return (NULL);
 }
-p = malloc(sizeof(char *) * (words + 1));
-if (p == NULL)
+i = 0;
+
+while (*str)
 {
+while (*str == ' ' && *str)
+{
+str++;
+}
+len = 0;
+
+while (*(str + len) != ' ' && *(str + len))
+{
+len += 1;
+}
+len += 1;
+col = malloc(sizeof(char) * len);
+
+if (!col)
+{
+for (k = j - 1; k >= 0; k--)
+{
+free(f[k]);
+}
+free(f);
 return (NULL);
 }
-for (i = 0; i < words; i++)
+
+for (k = 0; k < (len - 1);  k++)
 {
-while (*(str + w) == ' ')
+*(col + k) = *(str++);
+}
+*(col + k) = '\0';
+*(f + j) = col;
+
+if (j < (count - 1))
 {
-w++;
+j++;
 }
-letters = word_len(str + w);
-p[i] = malloc(sizeof(char) * (letters + 1));
-if (p[i] == NULL)
-{
-for (; i >= 0; i--)
-free(p[i]);
-free(p);
-return (NULL);
 }
-for (l = 0; l < letters; l++)
-{
-p[i][l] = str[w++];
-}
-p[i][l] = '\0';
-}
-p[i] = NULL;
-return (p);
+*(f + j) = NULL;
+return (f);
 }
