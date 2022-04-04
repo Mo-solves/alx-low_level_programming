@@ -1,102 +1,74 @@
-#include "main.h"
-
+#include <stdlib.h>
 /**
-*strtow - splits a stirng into words
-*@str: string to be splitted
-*
-*Return: pointer to the array of splitted words
-*/
-
-
-
-/**
-* num_words - counts the number of words in str
-*@str: string to be used
-*
-*Return: number of words
-*/
-int num_words(char *str)
-{
-int i = 0, words = 0;
-
-while (i <= len(str))
-{
-if ((str[i] != ' ') && (str[i] != '\0'))
-{
-i++;
-}
-else if (((str[i] == ' ') || (str[i] == '\0')) && i && (str[i - 1] != ' '))
-{
-words += 1;
-i++;
-}
-else
-{
-i++;
-}
-}
-return (words);
-}
-
-/**
-* len - returns length of str
-*@str: string to be counted
-*
-* Return: length of the string
-*/
-
-int len(char *str)
-{
-int len = 0;
-
-if (str != NULL)
-{
-while (str[len])
-len++;
-}
-return (len);
-}
+ * strtow - char
+ * @str: pointer to string params
+ * Return: char
+ */
 
 char **strtow(char *str)
 {
-char **split;
-int i, j = 0, temp = 0, size = 0, words = num_words(str);
-
-if (words == 0)
+int i = 0, j = 0, k = 0;
+int len = 0, count = 0;
+char **f, *col;
+if (!str || !*str)
+{
 return (NULL);
-split = (char **) malloc(sizeof(char *) * (words + 1));
-if (split != NULL)
-{
-for (i = 0; i <= len(str) && words; i++)
-{
-if ((str[i] != ' ') && (str[i] != '\0'))
-size++;
-else if (((str[i] == ' ') || (str[i] == '\0')) && i && (str[i - 1] != ' '))
-{
-split[j] = (char *) malloc(sizeof(char) * size + 1);
-if (split[j] != NULL)
-{
-while (temp < size)
-{
-split[j][temp] = str[(i - size) +temp];
-temp++;
 }
-split[j][temp] = '\0';
-size = temp = 0;
+while (*(str + i))
+{
+if (*(str + i) != ' ')
+{
+if (*(str + i + 1) == ' ' || *(str + i + 1) == 0)
+{
+count += 1;
+}
+}
+i++;
+}
+if (count == 0)
+{
+return (NULL);
+}
+count += 1;
+f = malloc(sizeof(char *) * count);
+if (!f)
+{
+return (NULL);
+}
+i = 0;
+while (*str)
+{
+while (*str == ' ' && *str)
+{
+str++;
+}
+len = 0;
+while (*(str + len) != ' ' && *(str + len))
+{
+len += 1;
+}
+len += 1;
+col = malloc(sizeof(char) * len);
+if (!col)
+{
+for (k = j - 1; k >= 0; k--)
+{
+free(f[k]);
+}
+free(f);
+return (NULL);
+}
+for (k = 0; k < (len - 1);  k++)
+{
+*(col + k) = *(str++);
+}
+*(col + k) = '\0';
+*(f + j) = col;
+if (j < (count - 1))
+{
 j++;
 }
-else
-{
-while (j-- >= 0)
-free(split[j]);
-free(split);
-return (NULL);
 }
-}
-}
-split[words] = NULL;
-return (split);
-}
-else
-return (NULL);
+*(f + j) = NULL;
+return (f);
 }
