@@ -1,112 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "main.h"
-
 /**
- * _strlen - find length of a string
- * @s: string
- * Return: int
+ *word_len - finds the length of a word
+ *@str:string to test
+ *
+ *Return:int
  */
-
-
-int _strlen(char *s)
+int word_len(char *str)
 {
-int size = 0;
-for (; s[size] != '\0'; size++)
-;
-return (size);
-}
+int i = 0, len = 0;
 
+while (*(str + i) && *(str + i) != ' ')
+{
+len++;
+i++;
+}
+return (len);
+}
 /**
- * *str_concat - concatenates two strings
- * @s1: string 1
- * @s2: string 2
- * Return: pointer
+ *word_count - counts the number of words
+ *
+ *@str:input
+ *
+ *Return:(no. of words)
+ *
  */
-
-char *str_addChar (char *str, char c)
+int word_count(char *str)
 {
-int size, i;
-char *m;
+int i = 0, len = 0, count = 0;
 
-size = _strlen(str);
-
-m = malloc((size + 1) * sizeof(char) + 1);
-if (m == 0)
-return (0);
-
-for (i = 0; i <= size; i++)
-m[i] = str[i];
-
-m[i + 1] = c;
-m[i + 2] = '\0';
-
-return (m);
+for (i = 0; *(str + i); i++)
+{
+len++;
 }
-
-
+for (i = 0; i < len; i++)
+{
+if (*(str + i) != ' ')
+{
+count++;
+i += word_len(str + i);
+}
+}
+return (count);
+}
 /**
- * *nbr_spaces - return the number of occurent of a string
- * @s: string to check
- * Return: int
+ *strtow - splits a string into words
+ *
+ *@str:input
+ *
+ *Return:0 - success
+ *
  */
-
-unsigned int nbr_spaces(char *s)
-{
-int i, cmpt = 0;
-
-for (i = 0; s[i + 1] != '\0'; i++)
-{
-if (s[i]  == ' ' && s[i + 1] != ' ')
-cmpt++;
-}
-
-return (cmpt + 1);
-}
-
-
-/**
-  *strtow - split a sentence into multiple words.
-  *@str: the string passed as argument.
-  *Return: tokens
-  */
 char **strtow(char *str)
 {
-int i;
-int spaces = nbr_spaces(str);
-char **tokens = NULL;//malloc(sizeof(char *) * (spaces));
-char *token;
-int checkingSpace = 0;
-int word = 0;
+int i, words, w, letters, l;
+char **p;
 
-if (!tokens)
+if (str == NULL || str[0] == '\0')
 {
-printf("Failed");
-return (0);
+return (NULL);
 }
-	
-
-printf("looping");
-for (i = 0; str[i] != '\0'; i++)
+words = word_count(str);
+if (words == 0)
 {
-if (str[i] == ' ')
-{
-if (checkingSpace == 0)
-{
-word++;
-checkingSpace = 1;
-} 
+return (NULL);
 }
-else
+p = malloc(sizeof(char *) * (words + 1));
+if (p == NULL)
 {
-printf("1");
-token = tokens[word];
-free(tokens[word]);
-str_addChar(token, str[i]);
-checkingSpace = 0;
+return (NULL);
 }
-
+for (i = 0; i < words; i++)
+{
+while (*(str + w) == ' ')
+{
+w++;
 }
-
-tokens[i] = NULL;
-
-return (tokens);
+letters = word_len(str + w);
+p[i] = malloc(sizeof(char) * (letters + 1));
+if (p[i] == NULL)
+{
+for (; i >= 0; i--)
+free(p[i]);
+free(p);
+return (NULL);
+}
+for (l = 0; l < letters; l++)
+{
+p[i][l] = str[w++];
+}
+p[i][l] = '\0';
+}
+p[i] = NULL;
+return (p);
 }
