@@ -77,6 +77,7 @@ return (str);
 int get_digit(char c)
 {
 int digit = c - '0';
+
 if (digit < 0 || digit > 9)
 {
 printf("Error\n");
@@ -110,6 +111,7 @@ prod++;
 }
 
 prod--;
+
 while (zeroes--)
 {
 *prod = '0';
@@ -160,6 +162,7 @@ tens = num / 10;
 next_prod--;
 next_len--;
 }
+
 for (; next_len >= 0 && *next_prod != 'x'; next_len--)
 {
 num = (*next_prod - '0');
