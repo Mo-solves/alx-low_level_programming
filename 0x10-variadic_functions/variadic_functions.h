@@ -14,7 +14,6 @@ typedef struct fmt
 	void (*p)(va_list s);
 } my_fmt;
 
-
 /*prototypes*/
 int sum_them_all(const unsigned int n, ...);
 void print_numbers(const char *separator, const unsigned int n, ...);
