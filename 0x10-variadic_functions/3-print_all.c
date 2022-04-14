@@ -16,8 +16,7 @@ va_start(list, format);
 while (format && format[j] != '\0')
 {
 switch (format[j])
-{ 
-case 'c':
+{ case 'c':
 switch (start)
 {
 case 1: printf(", ");
@@ -28,14 +27,14 @@ break;
 case 'i':
 switch (start)
 {
-case 1: printf(", "); 
+case 1: printf(", ");
 }
 start = 1;
 printf("%i", va_arg(list, int));
 break;
 case 'f':
 switch (start)
-{ 
+{
 case 1: printf(", ");
 }
 start = 1;
@@ -49,13 +48,12 @@ case 1: printf(", ");
 start = 1;
 p = va_arg(list, char*);
 if (p)
-{ 
+{
 printf("%s", p);
 break; 
 }
 printf("%p", p);
-break;
-}
+break; }
 j++;
 }
 printf("\n");
